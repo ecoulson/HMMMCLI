@@ -9,7 +9,7 @@ export default class RAM {
         }
     }
 
-    get(address : number) {
+    get(address : number) : number {
         if (address >= RAM.MemorySize) {
             throw new Error(`0x${address.toString(16).toUpperCase()} is outside the range of the RAM`);
         }
@@ -19,12 +19,15 @@ export default class RAM {
         return this.memory[address];
     }
 
-    set(address : number, value : number) {
+    set(address : number, value : number) : void {
         if (address >= RAM.MemorySize) {
             throw new Error(`0x${address.toString(16).toUpperCase()} is outside the range of the RAM`);
         }
         if (address < 0) {
             throw new Error(`Can not use a negative address 0x${address.toString(16).toUpperCase()}`);
+        }
+        if (value >= RAM.MemorySize || value < 0) {
+            throw new Error("Can't set the ram with a value greater than the byte size");
         }
         this.memory[address] = value;
     }

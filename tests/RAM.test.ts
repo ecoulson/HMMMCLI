@@ -36,10 +36,18 @@ test("Sets an address outside the RAM", () => {
     }).toThrow(new Error("0xFFF is outside the range of the RAM"));
 });
 
-test("Gets an address outside the RAM", () => {
+test("Sets an address outside the RAM", () => {
     const ram : RAM = new RAM();
 
     expect(() => {
         ram.set(-0xFFF, 0xE)
     }).toThrow(new Error("Can not use a negative address 0x-FFF"));
+})
+
+test("Sets with a value outside the possible size of integers", () => {
+    const ram : RAM = new RAM();
+
+    expect(() => {
+        ram.set(0xFF, 0x100);
+    }).toThrow(new Error("Can't set the ram with a value greater than the byte size"));
 })
